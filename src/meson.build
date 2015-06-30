@@ -35,12 +35,18 @@ src = [
 ]
         
 if get_option('shared_lib')
-  lualib = shared_library('lua', src)
+  libtype = 'shared_library'
 else
-  lualib = static_library('lua', src)
+  libtype = 'static_library'
 endif
 
-executable('luai', 'lua.c',
+lualib = build_target('lua', src,
+  target_type : libtype,
+  dependencies : libm)
+
+luai = executable('luai', 'lua.c',
   link_with : lualib)
-executable('luac', 'luac.c',
+luac = executable('luac', 'luac.c',
   link_with : lualib)
+
+test('luahello', luai, args : ['-e', 'print("hello")'])
