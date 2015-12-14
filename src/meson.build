@@ -33,12 +33,8 @@ src = [
   'loadlib.c',
   'linit.c',
 ]
-        
-if get_option('shared_lib')
-  lualib = shared_library('lua', src)
-else
-  lualib = static_library('lua', src)
-endif
+
+lualib = library('lua', src)
 
 executable('luai', 'lua.c',
   link_with : lualib)
