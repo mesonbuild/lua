@@ -34,9 +34,17 @@ src = [
   'linit.c',
 ]
 
+# LuaC requires a static library
+lualib_link = static_library('lua', src,
+  dependencies : m_dep)
+
 lualib = library('lua', src)
 
-executable('luai', 'lua.c',
-  link_with : lualib)
-executable('luac', 'luac.c',
-  link_with : lualib)
+luai = executable('luai', 'lua.c',
+  link_with : lualib_link,
+  dependencies : m_dep)
+luac = executable('luac', 'luac.c',
+  link_with : lualib_link,
+  dependencies : m_dep)
+
+test('luahello', luai, args : ['-e', 'print("hello")'])
