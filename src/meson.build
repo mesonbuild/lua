@@ -34,9 +34,15 @@ src = [
   'linit.c',
 ]
 
-lualib = library('lua', src)
+lualib = library('lua', src,
+  dependencies : system_deps)
 
 executable('luai', 'lua.c',
-  link_with : lualib)
-executable('luac', 'luac.c',
-  link_with : lualib)
+  link_with : lualib,
+  dependencies : readline_dep)
+
+# This only works with static linking.
+if get_option('default_library') == 'static'
+  executable('luac', 'luac.c',
+    link_with : lualib)
+endif
