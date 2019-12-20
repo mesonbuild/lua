@@ -13,7 +13,7 @@ elif host_machine.system() == 'darwin'
   add_project_arguments('-DLUA_USE_MACOSX', language : 'c')
   readline_dep = cc.find_library('readline')
 elif host_machine.system() == 'windows'
-  add_project_arguments('-DLUA_USE_WINDOWS', language : 'c')
+  # Lua will add LUA_USE_WINDOWS on its own
   readline_dep = []
 else
   readline_dep = []
