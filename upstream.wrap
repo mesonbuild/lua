@@ -1,7 +1,7 @@
 [wrap-file]
-directory = lua-5.3.0
+directory = lua-5.1.5
 
-source_url = http://www.lua.org/ftp/lua-5.3.0.tar.gz
-source_filename = lua-5.3.0.tar.gz
-source_hash = ae4a5eb2d660515eb191bfe3e061f2b8ffe94dce73d32cfd0de090ddcc0ddb01
+source_url = https://www.lua.org/ftp/lua-5.1.5.tar.gz
+source_filename = lua-5.1.5.tar.gz
+source_hash = 2640fc56a795f29d28ef15e13c34a47e223960b0240e8cb0a82d9b0738695333
 

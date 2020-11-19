@@ -1,0 +1,4 @@
+option(
+  'use_dlopen', type: 'feature', value: 'auto',
+  description: 'Link with libdl to allow Lua to "require" C extension modules'
+)
