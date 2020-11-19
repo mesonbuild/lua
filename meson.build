@@ -32,12 +32,20 @@ elif os != 'windows' and os != 'emscripten'
   endif
 endif
 
-lua_lib_deps = [cc.find_library('m', required: false)]
+lualib_deps = [cc.find_library('m', required: false)]
 
 dl_dep = cc.find_library('dl', required: get_option('use_dlopen'))
 if dl_dep.found()
-  lua_lib_deps += [dl_dep]
+  lualib_deps += [dl_dep]
   add_project_arguments('-DLUA_USE_DLOPEN', language: 'c')
+endif
+
+luaexe_deps = []
+
+readline_dep = dependency('readline', required: get_option('use_readline'))
+if readline_dep.found()
+  luaexe_deps += [readline_dep]
+  add_project_arguments('-DLUA_USE_READLINE', language: 'c')
 endif
 
 subdir('src')
@@ -46,7 +54,7 @@ lua_versions = meson.project_version().split('.')
 
 lua_lib = library('lua',
   lualib_src,
-  dependencies: lua_lib_deps,
+  dependencies: lualib_deps,
   override_options: project_options,
   version: meson.project_version(),
   # soversion of 5.1. Otherwise, it would be just 5 which wouldn't work since Lua isn't
@@ -58,6 +66,7 @@ lua_lib = library('lua',
 lua_exe = executable('lua',
   luaexe_src,
   link_with: lua_lib,
+  dependencies: luaexe_deps,
   export_dynamic: dl_dep.found(),
   override_options: project_options,
   implicit_include_directories: false,
